@@ -1,13 +1,14 @@
-##Introducción.
+## Introducción.
 En este proyecto se explicará el proceso que seguíré para realizar mi primer programa utilizando conceptos de inteligencia artificial, esperando que sea de utilidad para la comunidad, tratando de explicar todo de la forma más simple posible.
 
-##Problema.
+## Problema.
 En este proyecto se busca optimizar los caminos o rutas en un plano. El plano muestra los diferentes sitios y calles por donde se puede transitar.
 
 Realizar un programa computacional ayudado de la inteligencia artificial (porblema que resolveremos inicialmente con el algortimo Q-Learning) que en cada momento que se solicite, arroje la ruta óptima para ir desde un punto inicial a uno final, con posibles restricciones o imposisciones de paso por algún lugar.
 
-##Desarrollo.
-###Planteamiento (1).
+## Desarrollo.
+
+### Planteamiento (1).
 Para comenzar me gustaría comzar sencillo, entoces lo que haré en esta parte será solo hacer que aprenda a moverse por los nodos que estan conectados.
 
 De ejemplo crearé un mapa de 16 nodos para hacer las pruebas.
@@ -36,7 +37,7 @@ Ahora si volvemos a la matriz y usamos los indices serían **X es igual 0** ya q
 
 Entonces en la matriz le asignamos el valor de **1** en esas coordenadas, y al resto que son las transiciones que no son válidas por lo que les asiganos el valor de **0**.
 
-###Solución planteamiento (1).
+### Solución planteamiento (1).
 Como primer objetivo del primer planteamiento me puse el que pueda hacer las transiciones como ayuda visual creé un funcion para mostrar todas las transiciones posibles de cada nodo, la se muestra a continuación.
 
 ![Función monstrar transiciones](https://drive.google.com/uc?export=view&id=1NEqvsikE0qMJKmMbZ50yYdV8pj3Sq_Qn)
@@ -140,14 +141,14 @@ imprimir resultados.
 
 - print('Ruta: {}'.format(route))
 
-###Funciones no relevantes.
+### Funciones no relevantes.
 Una funcion que no es esencial es **get_key_by_value**.
 
 ![Función para crear rutas](https://drive.google.com/uc?export=view&id=1jqnu6v8PAnIMGBFKwjZju62Pc_un_dNQ)
 
 La cual recibe como parametros el diccionario **states** y el valor que se busca, esto para devolver el nombre del nodo.
 
-###Resultados planteamiento(1)
+### Resultados planteamiento(1)
 
 Al ejetutar nustro código nos genera nuestra primera ruta aleatoria para llegar de un punto a otro, dando en consola un mesaje parecido a este.
 
