@@ -12,11 +12,12 @@ Realizar un programa computacional ayudado de la inteligencia artificial (porble
 Para comenzar me gustaría comzar sencillo, entoces lo que haré en esta parte será solo hacer que aprenda a moverse por los nodos que estan conectados.
 
 De ejemplo crearé un mapa de 16 nodos para hacer las pruebas.
+
 ![Diagrama de los nodos del plano de ejemplo](https://drive.google.com/uc?export=view&id=1izct1E1WojqY243KIqCGbX_S1nGUn8tW)
 
-Ahora crearé un diccionario relacionando el nombre del nodo con un valor numero desde 0 hasta el número de nodos que tenemos, en este caso 0 a 15
+Ahora crearé un diccionario relacionando el nombre del nodo con un valor numero desde 0 hasta el número de nodos que tenemos, en este caso 0 a 15.
 
-![Diccionario de realcion nombre del nodo - valor](https://drive.google.com/uc?export=view&id=1EoaO4erhCuvocNVTAJhken5DxG7N3n85)
+![Diccionario de realcion nombre del nodo valor](https://drive.google.com/uc?export=view&id=1EoaO4erhCuvocNVTAJhken5DxG7N3n85)
 
 También haré una matriz llamada **'rewards'** para establecer los nodos que están conectados.
 
