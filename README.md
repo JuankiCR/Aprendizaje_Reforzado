@@ -17,7 +17,7 @@ De ejemplo crearé un mapa de 16 nodos para hacer las pruebas.
 
 Ahora crearé un diccionario relacionando el nombre del nodo con un valor numero desde 0 hasta el número de nodos que tenemos, en este caso 0 a 15.
 
-```
+```python
 states = {
     'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7,
     'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15
@@ -26,7 +26,7 @@ states = {
 
 También haré una matriz llamada **'rewards'** para establecer los nodos que están conectados.
 
-```
+```python
 rewards = [ #A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P
             [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#A
             [1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#B
@@ -65,7 +65,7 @@ Entonces en la matriz le asignamos el valor de **1** en esas coordenadas, y al r
 ### Solución planteamiento (1).
 Como primer objetivo del primer planteamiento me puse el que pueda hacer las transiciones como ayuda visual creé un funcion para mostrar todas las transiciones posibles de cada nodo, la se muestra a continuación.
 
-```
+```python
 def show_transitions(states, rewards):
   for state in states:
     actualState = states[state]
@@ -102,7 +102,7 @@ Con esto nostros podemos ver visualmente si nuestras transiciones están bien he
 
 Para esto nos basamos en la funcion de mostrar pero ahora en luegar de generar una salida por consola generamos una lista con los valores numericos de cada nodo y para prepararme para los futuros pasos a cada transición le agregaré un valor **1** que para comenzar todos comenzarán con el mismo valor, este representa la probalilidad de que el programa transite hacia ese nodo, lo retomaremos más adelante pero de momento lo dejaremos así.
 
-```
+```python
 def init_transitions(states, rewards):
   transitionProbabilities = []
   
@@ -155,7 +155,7 @@ Ahora un ejemplo práctico, para consultar las transiciones posbiles del **nodo 
 
 Ya que tenemos los nodos a los que podemos transitar ahora toca generar una ruta, para lo que se creó la siguiente función.
 
-```
+```python
 def make_route(startNode, transitionProbabilities, goalNode, states):
   actualNode = startNode
   transitionCounter = 0
@@ -229,7 +229,7 @@ imprimir resultados.
 ### Funciones no relevantes.
 Una funcion que no es esencial es **get_key_by_value**.
 
-```
+```python
 def get_key_by_value(states, value):
   for state in states:
     if states[state] == value:
