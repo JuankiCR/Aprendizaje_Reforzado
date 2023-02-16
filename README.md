@@ -17,11 +17,35 @@ De ejemplo crearé un mapa de 16 nodos para hacer las pruebas.
 
 Ahora crearé un diccionario relacionando el nombre del nodo con un valor numero desde 0 hasta el número de nodos que tenemos, en este caso 0 a 15.
 
-![Diccionario de realcion nombre del nodo valor](https://drive.google.com/uc?export=view&id=1EoaO4erhCuvocNVTAJhken5DxG7N3n85)
+```
+states = {
+    'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7,
+    'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15
+}
+```
 
 También haré una matriz llamada **'rewards'** para establecer los nodos que están conectados.
 
-![Matriz de posibles transiciones](https://drive.google.com/uc?export=view&id=18SXUz20WgA7Y-vVuR4krplFdZbCkOOJd)
+```
+rewards = [ #A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P
+            [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#A
+            [1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#B
+            [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],#C
+            [0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],#D
+            [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],#E
+            [0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],#F
+            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],#G
+            [0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],#H
+            [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],#I
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],#J
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0],#K
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0],#L
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1],#M
+            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],#N
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1],#O
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0] #P
+  ]
+```
 
 El funcionamiento de la matriz es el siguiente, las columnas y renglones representan cada uno de los nodos y el punto donde se cruzan será si se puede trancitar de uno a otro por ejemplo. en la matriz **rewards[ X, Y ]** donde **X** es el nodo actual y **Y** son todos los nodos a los que en teoría podria moverse, siendo las acciones que el agente puede tomar.
 
@@ -41,17 +65,59 @@ Entonces en la matriz le asignamos el valor de **1** en esas coordenadas, y al r
 ### Solución planteamiento (1).
 Como primer objetivo del primer planteamiento me puse el que pueda hacer las transiciones como ayuda visual creé un funcion para mostrar todas las transiciones posibles de cada nodo, la se muestra a continuación.
 
-![Función monstrar transiciones](https://drive.google.com/uc?export=view&id=1NEqvsikE0qMJKmMbZ50yYdV8pj3Sq_Qn)
+```
+def show_transitions(states, rewards):
+  for state in states:
+    actualState = states[state]
+    transitionList = []
+    for transitionIndex, transitions in enumerate(rewards[actualState]):
+      if transitions == 1:
+        transitionList.append(list(states.keys())[list(states.values()).index(transitionIndex)])
+
+    print('{} puede ir a: {}'.format(state, transitionList))
+```
 
 En nuestro ejemplo la función mostrara como reslutado lo siguiente.
 
-![Función monstrar transiciones](https://drive.google.com/uc?export=view&id=1IWpBXD_nuV7MboVhZA2sRB4FwzsHMUfX)
+```
+A puede ir a: ['B', 'C', 'E']
+B puede ir a: ['A', 'D', 'F']     
+C puede ir a: ['A', 'E', 'G']     
+D puede ir a: ['B', 'I', 'N']     
+E puede ir a: ['A', 'C', 'F', 'H']
+F puede ir a: ['B', 'E', 'I', 'J']
+G puede ir a: ['C', 'H', 'L']     
+H puede ir a: ['E', 'G', 'K']     
+I puede ir a: ['D', 'F']
+J puede ir a: ['F', 'K', 'M']     
+K puede ir a: ['H', 'J', 'M', 'O']
+L puede ir a: ['G', 'O']
+M puede ir a: ['J', 'K', 'N', 'P']
+N puede ir a: ['D', 'M', 'P']
+O puede ir a: ['K', 'L', 'P']
+P puede ir a: ['M', 'N', 'O']
+```
 
 Con esto nostros podemos ver visualmente si nuestras transiciones están bien hechas pero el programa todavia no cuenta con esa información, entonces el siguiente paso es poder tener esta información en algún lugar para que nuestro programa pueda saber a que nodo puede moverse dependiendo de en que nodo se encuentra.
 
 Para esto nos basamos en la funcion de mostrar pero ahora en luegar de generar una salida por consola generamos una lista con los valores numericos de cada nodo y para prepararme para los futuros pasos a cada transición le agregaré un valor **1** que para comenzar todos comenzarán con el mismo valor, este representa la probalilidad de que el programa transite hacia ese nodo, lo retomaremos más adelante pero de momento lo dejaremos así.
 
-![Función inicializar transiciones válidas](https://drive.google.com/uc?export=view&id=1whJGvAY3KFCUbdGtg1S06uQt4yO2nudv)
+```
+def init_transitions(states, rewards):
+  transitionProbabilities = []
+  
+  for state in states:
+    actualState = states[state]
+    dictionaryProbabilities = {}
+
+    for transitionIndex, transitions in enumerate(rewards[actualState]):
+      if transitions == 1:
+        dictionaryProbabilities[str(transitionIndex)] = 1
+
+    transitionProbabilities.append(dictionaryProbabilities)
+  
+  return transitionProbabilities
+```
 
 Entonces la función nos generaría una lista como la siguiente, la cual es una lista con un diccionario en cada uno de sus elementos.
 
@@ -89,7 +155,25 @@ Ahora un ejemplo práctico, para consultar las transiciones posbiles del **nodo 
 
 Ya que tenemos los nodos a los que podemos transitar ahora toca generar una ruta, para lo que se creó la siguiente función.
 
-![Función para crear rutas](https://drive.google.com/uc?export=view&id=1GqaqTtosbYWbJSyGbcSGCJnwKkkylBSe)
+```
+def make_route(startNode, transitionProbabilities, goalNode, states):
+  actualNode = startNode
+  transitionCounter = 0
+  routePoints = 0
+  route = get_key_by_value(states, actualNode)
+  while actualNode != goalNode:
+    posibleTransitions = transitionProbabilities[actualNode]
+    transitionChoise = random.choices(list(posibleTransitions.keys()), weights=list(posibleTransitions.values()), k=1)[0]
+    actualNode = int(transitionChoise)
+    transitionCounter += 1
+    routePoints -= 1
+    route += ' --> ' + get_key_by_value(states, int(transitionChoise))
+  
+  print('Transiciones realizadas: {}'.format(transitionCounter))
+  print('Puntuacion: {}'.format(routePoints))
+
+  print('Ruta: {}'.format(route))
+```
 
 Esta funcio recibe el nodo en el que inicia, la lista con las posibles transiciones, en nodo objetivo y el diccionario de los estados.
 
@@ -145,7 +229,12 @@ imprimir resultados.
 ### Funciones no relevantes.
 Una funcion que no es esencial es **get_key_by_value**.
 
-![Función para crear rutas](https://drive.google.com/uc?export=view&id=1jqnu6v8PAnIMGBFKwjZju62Pc_un_dNQ)
+```
+def get_key_by_value(states, value):
+  for state in states:
+    if states[state] == value:
+      return state
+```
 
 La cual recibe como parametros el diccionario **states** y el valor que se busca, esto para devolver el nombre del nodo.
 
@@ -153,8 +242,12 @@ La cual recibe como parametros el diccionario **states** y el valor que se busca
 
 Al ejetutar nustro código nos genera nuestra primera ruta aleatoria para llegar de un punto a otro, dando en consola un mesaje parecido a este.
 
-![Función para crear rutas](https://drive.google.com/uc?export=view&id=1VJbJbyRnrXa7t1UxK8dpFoYkxepp2QgM)
+```
+Transiciones realizadas: 6
+Puntuacion: -6
+Ruta: A --> C --> A --> C --> G --> L --> O
+```
 
-En la imagen vemos que se realizaron 7 transiciones, gastando un punto por cada una y sin recibir ningún tipo de recompensa, la ruta generada para ir del **nodo A** al **nodo O** fue la siguiente.
+En la imagen vemos que se realizaron 6 transiciones, gastando un punto por cada una y sin recibir ningún tipo de recompensa, la ruta generada para ir del **nodo A** al **nodo O** fue la siguiente.
 
-- A → C → E → C → G → H → K → O
+- A → C → A → C → G → L → O

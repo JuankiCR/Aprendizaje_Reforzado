@@ -43,7 +43,7 @@ def main():
   make_route(startNode, transitionProbabilities, goalNode, states)
 
   #---------- Llamar a la funcion para mostrar las transiciones ----------
-  #show_transitions(states, rewards)
+  # show_transitions(states, rewards)
 
 #---------- Definir una función para mostar los nodos y sus transiciones ----------
 def show_transitions(states, rewards):
